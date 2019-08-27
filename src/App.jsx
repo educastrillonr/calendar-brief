@@ -1,6 +1,7 @@
 import React, { Component } from "react";
-// import logo from "./logo.svg";
-import "./App.css";
+import CenteredTabs from "./components/CenteredTabs/CenteredTabs";
+import Card from "./components/Card/Card";
+import "./App.scss";
 // import { getAPI } from "googleapis-common";
 
 class App extends Component {
@@ -48,9 +49,20 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        {this.state.events.map((event, index) => (
-          <p key={index}>{event.summary}</p>
-        ))}
+        <header>
+          <h1>KIDIE</h1>
+        </header>
+        <CenteredTabs />
+        <section className="cardsContainer">
+          {this.state.events.map((event, index) => (
+            <Card
+              key={index}
+              summary={event.summary}
+              start={event.start.date || event.start.dateTime}
+              end={event.end.date || event.end.dateTime}
+            />
+          ))}
+        </section>
       </div>
     );
   }
