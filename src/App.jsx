@@ -49,7 +49,7 @@ class App extends Component {
 
   getUpcomingEvents = events => {
     return events.filter(event => {
-      return Date.parse(this.getEventStart(event)) - Date.now() > 0;
+      return Date.parse(this.getEventStart(event)) > Date.now();
     });
   };
 
