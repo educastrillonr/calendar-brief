@@ -3,7 +3,9 @@ import styles from "./Cards.module.scss";
 import React, { Component } from "react";
 
 class Cards extends Component {
-  state = {};
+  state = {
+    dummy: false
+  };
 
   getUpcomingEvents = events => {
     return events.filter(event => {
@@ -25,10 +27,6 @@ class Cards extends Component {
     return event.start.date || event.start.dateTime;
   };
 
-  // compareEvents = (eventOne, eventTwo) => {
-  //   return this.getEventStart(eventOne) - this.getEventStart(eventTwo);
-  // };
-
   filteredEvents = (events, criteria) => {
     let filteredEvents = [];
 
@@ -45,16 +43,21 @@ class Cards extends Component {
       default:
         break;
     }
-    // filteredEvents.sort(function(a, b) {
-    //   console.log(a);
-
-    //   return this.getEventStart(a) - this.getEventStart(b);
-    // });
+    filteredEvents.sort(function(a, b) {
+      return (
+        Date.parse(a.start.date || a.start.dateTime) -
+        Date.parse(b.start.date || b.start.dateTime)
+      );
+    });
     return filteredEvents;
   };
 
-  addToInterested = event => {
-    event.interested = true;
+  toggleInterest = event => {
+    if (event.interested) {
+      event.interested = !event.interested;
+    } else {
+      event.interested = true;
+    }
   };
 
   render() {
@@ -64,11 +67,8 @@ class Cards extends Component {
           {this.filteredEvents(this.props.events, this.props.tab).map(event => (
             <Card
               key={event.summary}
-              summary={event.summary}
-              start={event.start.date || event.start.dateTime}
-              end={event.end.date || event.end.dateTime}
-              addToInterested={() => this.addToInterested(event)}
-              link={event.htmlLink}
+              event={event}
+              toggleInterest={() => this.toggleInterest(event)}
               isEventFinished={() => this.isEventFinished(event)}
             />
           ))}
