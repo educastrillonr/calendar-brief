@@ -65,12 +65,19 @@ class App extends Component {
 
   filteredEvents = (events, criteria) => {
     let filteredEvents = [];
-    if (criteria === "Upcoming") {
-      filteredEvents = this.getUpcomingEvents(events);
-    } else if (criteria === "Interested") {
-      filteredEvents = this.getEventsByInterest(events);
-    } else {
-      filteredEvents = [...events];
+
+    switch (criteria) {
+      case "Upcoming":
+        filteredEvents = this.getUpcomingEvents(events);
+        break;
+      case "Interested":
+        filteredEvents = this.getEventsByInterest(events);
+        break;
+      case "All":
+        filteredEvents = [...events];
+        break;
+      default:
+        break;
     }
 
     return filteredEvents;
