@@ -10,12 +10,23 @@ import styles from "./Card.module.scss";
 const useStyles = makeStyles({
   card: {
     width: 300,
-    height: 160
+    height: 160,
+    margin: "0 auto"
   },
-  bullet: {
-    display: "inline-block",
-    margin: "0 2px",
-    transform: "scale(0.8)"
+  title: {
+    fontSize: 14
+  },
+  pos: {
+    margin: 20
+  }
+});
+
+const secondaryStyles = makeStyles({
+  card: {
+    width: 300,
+    height: 160,
+    margin: "0 auto",
+    background: "grey"
   },
   title: {
     fontSize: 14
@@ -27,9 +38,12 @@ const useStyles = makeStyles({
 
 export default function SimpleCard(props) {
   const classes = useStyles();
+  const secondaryClasses = secondaryStyles();
 
   return (
-    <Card className={classes.card}>
+    <Card
+      className={props.isEventFinished() ? secondaryClasses.card : classes.card}
+    >
       <CardContent>
         <a className={styles.link} href={props.link} target="_blank">
           <Typography variant="h5" component="h2">
