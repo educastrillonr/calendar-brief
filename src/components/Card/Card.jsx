@@ -28,7 +28,7 @@ const secondaryStyles = makeStyles({
     height: 160,
     margin: "0 auto",
     background: "#403D39",
-    opacity: 0.8
+    opacity: 0.6
   },
   title: {
     fontSize: 14

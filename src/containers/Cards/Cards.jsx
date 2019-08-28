@@ -3,10 +3,6 @@ import styles from "./Cards.module.scss";
 import React, { Component } from "react";
 
 class Cards extends Component {
-  state = {
-    dummy: false
-  };
-
   getUpcomingEvents = events => {
     return events.filter(event => {
       return !this.isEventFinished(event);
