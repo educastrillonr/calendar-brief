@@ -10,7 +10,7 @@ const useStyles = makeStyles({
   }
 });
 
-export default function CenteredTabs() {
+export default function CenteredTabs(props) {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
 
@@ -27,9 +27,12 @@ export default function CenteredTabs() {
         textColor="primary"
         centered
       >
-        <Tab label="All" />
-        <Tab label="Upcoming" />
-        <Tab label="Interested" />
+        <Tab onClick={() => props.handleTabs("All")} label="All" />
+        <Tab onClick={() => props.handleTabs("Upcoming")} label="Upcoming" />
+        <Tab
+          onClick={() => props.handleTabs("Interested")}
+          label="Interested"
+        />
       </Tabs>
     </Paper>
   );

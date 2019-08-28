@@ -5,6 +5,7 @@ import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
+import styles from "./Card.module.scss";
 
 const useStyles = makeStyles({
   card: {
@@ -30,19 +31,21 @@ export default function SimpleCard(props) {
   return (
     <Card className={classes.card}>
       <CardContent>
-        <Typography variant="h5" component="h2">
-          {props.summary.length > 20
-            ? props.summary.slice(0, 20) + "..."
-            : props.summary}
-        </Typography>
-        <Typography variant="body2" component="p">
-          Start: {props.start}
-          <br />
-          Finish: {props.end}
-        </Typography>
+        <a className={styles.link} href={props.link} target="_blank">
+          <Typography variant="h5" component="h2">
+            {props.summary.length > 20
+              ? props.summary.slice(0, 20) + "..."
+              : props.summary}
+          </Typography>
+          <Typography variant="body2" component="p">
+            Start: {props.start}
+            <br />
+            Finish: {props.end}
+          </Typography>
+        </a>
       </CardContent>
       <CardActions>
-        <Button onClick={""} size="small">
+        <Button onClick={props.addToInterested} size="small">
           I'm interested
         </Button>
       </CardActions>

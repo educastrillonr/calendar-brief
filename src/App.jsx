@@ -2,11 +2,11 @@ import React, { Component } from "react";
 import CenteredTabs from "./components/CenteredTabs/CenteredTabs";
 import Card from "./components/Card/Card";
 import "./App.scss";
-// import { getAPI } from "googleapis-common";
 
 class App extends Component {
   state = {
-    events: []
+    events: [],
+    tab: "All"
   };
 
   componentDidMount() {
@@ -27,11 +27,12 @@ class App extends Component {
         })
         .then(
           response => {
-            console.log(response.result);
+            // console.log(response.result);
             let events = response.result.items;
             that.setState(
               {
-                events
+                events: events,
+                filteredEvents: events
               },
               () => {
                 console.log(that.state.events);
@@ -46,20 +47,61 @@ class App extends Component {
     window.gapi.load("client", start);
   }
 
+  getUpcomingEvents = events => {
+    return events.filter(event => {
+      return Date.parse(this.getEventStart(event)) - Date.now() > 0;
+    });
+  };
+
+  getEventsByInterest = events => {
+    return events.filter(event => {
+      return event.interested;
+    });
+  };
+
+  getEventStart = event => {
+    return event.start.date || event.start.dateTime;
+  };
+
+  filteredEvents = (events, criteria) => {
+    let filteredEvents = [];
+    if (criteria === "Upcoming") {
+      filteredEvents = this.getUpcomingEvents(events);
+    } else if (criteria === "Interested") {
+      filteredEvents = this.getEventsByInterest(events);
+    } else {
+      filteredEvents = [...events];
+    }
+
+    return filteredEvents;
+  };
+
+  addToInterested = event => {
+    event.interested = true;
+  };
+
+  handleTabs = tab => {
+    this.setState({
+      tab
+    });
+  };
+
   render() {
     return (
       <div className="App">
         <header>
           <h1>KIDIE</h1>
         </header>
-        <CenteredTabs />
+        <CenteredTabs handleTabs={this.handleTabs} />
         <section className="cardsContainer">
-          {this.state.events.map((event, index) => (
+          {this.filteredEvents(this.state.events, this.state.tab).map(event => (
             <Card
-              key={index}
+              key={event.summary}
               summary={event.summary}
               start={event.start.date || event.start.dateTime}
               end={event.end.date || event.end.dateTime}
+              addToInterested={() => this.addToInterested(event)}
+              link={event.htmlLink}
             />
           ))}
         </section>
