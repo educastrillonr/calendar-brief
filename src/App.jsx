@@ -28,15 +28,10 @@ class App extends Component {
         .then(
           response => {
             let events = response.result.items;
-            this.setState(
-              {
-                events: events,
-                filteredEvents: events
-              },
-              () => {
-                console.log(this.state.events);
-              }
-            );
+            this.setState({
+              events: events,
+              filteredEvents: events
+            });
           },
           reason => {
             console.log(reason.result.error.message);
