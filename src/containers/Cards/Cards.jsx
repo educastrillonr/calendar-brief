@@ -39,10 +39,9 @@ class Cards extends Component {
       default:
         break;
     }
-    filteredEvents.sort(function(a, b) {
+    filteredEvents.sort((a, b) => {
       return (
-        Date.parse(a.start.date || a.start.dateTime) -
-        Date.parse(b.start.date || b.start.dateTime)
+        Date.parse(this.getEventStart(a)) - Date.parse(this.getEventStart(b))
       );
     });
     return filteredEvents;
