@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { makeStyles, withStyles } from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
@@ -12,13 +12,7 @@ const useStyles = makeStyles({
   card: {
     width: 300,
     height: 160,
-    margin: "0 auto"
-  },
-  title: {
-    fontSize: 14
-  },
-  pos: {
-    margin: 20
+    margin: "0 auto;"
   }
 });
 
@@ -26,19 +20,12 @@ const secondaryStyles = makeStyles({
   card: {
     width: 300,
     height: 160,
-    margin: "0 auto",
-    background: "#403D39",
-    opacity: 0.6
-  },
-  title: {
-    fontSize: 14
-  },
-  pos: {
-    margin: 20
+    margin: "0 auto;",
+    background: "rgba(64, 61, 57, 0.6)"
   }
 });
 
-export default function SimpleCard(props) {
+const SimpleCard = props => {
   let [interested, update] = useState(false);
   const classes = useStyles();
   const secondaryClasses = secondaryStyles();
@@ -48,10 +35,15 @@ export default function SimpleCard(props) {
       className={props.isEventFinished() ? secondaryClasses.card : classes.card}
     >
       <CardContent>
-        <a className={styles.link} href={props.event.htmlLink} target="_blank">
+        <a
+          className={styles.link}
+          href={props.event.htmlLink}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
           <Typography variant="h5" component="h2">
             {props.event.summary.length > 20
-              ? props.event.summary.slice(0, 20) + "..."
+              ? props.event.summary.slice(0, 18) + "..."
               : props.event.summary}
           </Typography>
           <Typography variant="body2" component="p">
@@ -75,4 +67,6 @@ export default function SimpleCard(props) {
       </CardActions>
     </Card>
   );
-}
+};
+
+export default SimpleCard;

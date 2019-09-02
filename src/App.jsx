@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import CenteredTabs from "./components/CenteredTabs/CenteredTabs";
 import Cards from "./containers/Cards/Cards";
-import Card from "./components/Card/Card";
+import key from "./api";
 import "./App.scss";
 
 class App extends Component {
@@ -11,14 +11,6 @@ class App extends Component {
   };
 
   componentDidMount() {
-    // fetch(
-    //   "https://www.googleapis.com/calendar/v3/calendars/nology.io_5smheaincm2skd1tcmvv7m37d8@group.calendar.google.com/events"
-    // )
-    //   .then(res => res.json())
-    //   .then(data =>
-    //     this.setState({ books: data.items }, console.log(this.state.books))
-    //   )
-    //   .catch(error => this.setState({ error: error }));
     this.getEvents();
   }
 
@@ -26,7 +18,7 @@ class App extends Component {
     const start = () => {
       window.gapi.client
         .init({
-          apiKey: "AIzaSyDCz7WEpbGkffFuiOehe9E1L6s92aE6pD0"
+          apiKey: key //your api key here
         })
         .then(() => {
           return window.gapi.client.request({
